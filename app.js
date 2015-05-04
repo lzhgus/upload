@@ -10,6 +10,26 @@ app.controller("testa",["$scope","$window","$http","$upload",function($scope,$wi
         $scope.recipe.steps.push({text: '',unit:''})
     };
     
+    $scope.uploadResult = [];
+    $scope.onFileSelect = function($files) {
+    //$files: an array of files selected, each file has name, size, and type.
+        for (var i = 0; i < $files.length; i++) {
+          var $file = $files[i];
+          $upload.upload({
+            url: 'upload_img.php',
+            file: $file,
+            progress: function(e){}
+          }).then(function(response) {
+            // file is uploaded successfully
+            $timeout(function() {
+                        $scope.uploadResult.push(response.data);
+                        console.log($scope.uploadResult);
+                    });
+
+          }); 
+        }
+    }
+    
     var validateRecipe=function(){
         var recipe=$scope.recipe;
         var errs=[];
@@ -54,7 +74,7 @@ app.controller("testa",["$scope","$window","$http","$upload",function($scope,$wi
         //$scope.recipe.ings.push({name:$scope.ing.name,unit:$scope.ing.unit});
         //$scope.recipe.steps.push({text:$scope.step.text});
         
-            $http.post('upload.php',{'name':$scope.recipe.name,'picurl':$scope.recipe.picurl,'desc':$scope.recipe.desc, 'ings':$scope.recipe.ings,'steps':$scope.recipe.steps}
+            $http.post('upload.php',{'name':$scope.recipe.name,'desc':$scope.recipe.desc, 'ings':$scope.recipe.ings,'steps':$scope.recipe.steps}
                        ).success(function(data,status,headers,config){
                 $window.alert("good");
             }).error(function(data,status){
@@ -62,6 +82,8 @@ app.controller("testa",["$scope","$window","$http","$upload",function($scope,$wi
             })
         }
     };
+    
+    
 
 }]);
     
