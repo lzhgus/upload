@@ -1,0 +1,84 @@
+<!Doctype html>
+<html  lang="en-us">
+<head>
+    <title>Create decipes 【Yummy】</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <script>
+            recipe= {
+                name: "",
+                picurl: '',
+                desc: "",
+                owner: '',
+                ings: [
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''}
+                ],
+                steps: [
+                      {text: 'a',unit:''},
+                      {text: 'b',unit:''}
+
+                ]
+            };
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                recipe.picurl=URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="app.js"></script>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="testa">
+        <div id="one">
+            <h1 class="page-title">
+                <input ng-model="recipe.name" placeholder="Click to name the recipe"></input>
+                    {{recipe.name}}
+            </h1>
+        </div>
+        <div class="ings">
+            <h3>Ingredient</h3><br>
+            <table>
+                <tr ng-repeat="ing in recipe.ings" class="table table-striped">
+                    <td class="name has-border">
+                        <input type="text" placeholder="Ingredient name" ng-model="ing.name"></input>
+                    </td>
+                <td class="unit has-border">
+                    <input type="text" placeholder="Coverage" ng-model="ing.unit"></input>
+                </td>
+                </tr>
+            </table>
+            <div class="clearfix">
+                <button ng-click="addIng()">Add an Ingredient</button>
+            </div>
+        </div>
+
+        <div class="steps">
+            <h3>Direction </h3>
+            <ol>
+                <li ng-repeat="step in recipe.steps">
+                    <div class="text">
+                        {{step.text}}
+                        
+                    </div>
+                </li>
+                
+            </ol>
+            <div class="clearfix">
+                <button ng-click="addstep()">Add an step</button>
+            </div>       
+        </div>
+            <div id="seven">
+                    <div class="createRecipeEnd">
+                        <button ng-click="publish()">Publish recipe</button>
+                    </div>
+                </div>
+    </div>
+</body>

@@ -1,0 +1,155 @@
+<!Doctype html>
+<html lang="en-us">
+<head>
+    <title>Create decipes 【Yummy】</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <script>
+            recipe= {
+                name: "",
+                picurl: '',
+                desc: "",
+                owner: '',
+                ings: [
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''},
+                      {name: '', unit: ''}
+                ],
+                steps: [
+                      {text: ''},
+                      {text: ''},
+                      {text: ''},
+                      {text: ''},
+                      {text: ''}
+                ]
+            };
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                recipe.picurl=URL.createObjectURL(event.target.files[0]);
+                
+            };
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script type="text/javascript" src="angular-file-upload.js"> </script>
+        <script src="app.js"></script>
+</head>
+
+<body  ng-app="myApp" data-spy="scroll" data-target=".navbar" >
+    <div ng-controller="testa">
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Yummy</a>
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a href="#one">
+                                Recipe
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#two">
+                                Photo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#three">
+                                Abstract
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#four">
+                                Author
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#five">
+                                Ingredient
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#six">
+                                Direction
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content" >
+                <div id="one">
+                    <h1 class="page-title">
+                        <input ng-model="recipe.name" placeholder="Click to name the recipe"></input>
+                    {{recipe.name}}
+                    </h1>
+                </div>
+            
+                <div id="two">
+                    <div class="photo-box">
+                        <h3> Add Photo</h3><br>
+                        <img id="output" class="img-responsive"/>
+                        <input type="file" accept="image/*" name="picurl" ng-file-select="onFileSelect($files)"  onchange="loadFile(event)" ng-model="recipe.picurl"/><br>                                         
+                    </div>
+                </div>
+            
+                <div id="three">
+                    <h3>Abstract</h3><br>
+                    <textarea class="form-control" rows="3" placeholder="click to add describtion" ng-model="recipe.desc"></textarea>
+                </div>
+            
+                <div id="four" ng-model="recipe.owner">
+                    <h3>Author:{{recipe.owner}}</h3><br>
+                </div>
+            
+                <div id="five">
+                    <div class="ings">
+                        <h3>Ingredient</h3><br>
+                        <table>
+                            <tr ng-repeat="ing in recipe.ings" class="table table-striped">
+                                <td class="name has-border">
+                                    <input type="text" placeholder="Ingredient name" ng-model="ing.name"></input>
+                                </td>
+                                <td class="unit has-border">
+                                    <input type="text" placeholder="Coverage" ng-model="ing.unit"></input>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix">
+                            <button ng-click="addIng()">Add an Ingredient</button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div id="six">
+                    <div class="steps">
+                        <h3>Direction </h3><br>
+                        <ol>
+                            <li ng-repeat="step in recipe.steps">
+                                <div class="textan">
+                                    <textarea class="form-control" rows="3" placeholder="click to add recipe step" ng-model="step.text" ></textarea>
+                                </div>
+                            </li>
+                        </ol>
+                        
+                        <button ng-click="addstep()">Add an Step</button>
+                        
+                    </div>
+                </div>
+                
+                <div id="seven">
+                    <div class="createRecipeEnd">
+                        <button ng-click="publish()">Publish recipe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</body>
+</html>
