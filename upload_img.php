@@ -3,8 +3,9 @@
 $m = new MongoClient();
 $db=$m->admin;
 
+date_default_timeZone_set("America/New_York");
 $nrid=-1;
-$collection=$db->cuonters;
+$collection=$db->counters;
 $query=array("id"=>"rid");
 $cursor=$collection->find($query);
 foreach($cursor as $doc)
@@ -51,8 +52,12 @@ $files->update(array("filename"=>$picture_name),
 
 $imageFile = $gridfs->findOne(array("_id" => $id))->getBytes();
 
+$time=date("m/d/Y H:i");
+
 $newinsert = array(
-	"picurl" => $id
+	"picurl" => $id,
+    "rid"=> $nrid,
+    "time" => $time
 );
 
 $collection->insert($newinsert);
